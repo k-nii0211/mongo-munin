@@ -6,10 +6,11 @@ def doData():
     totals = { 'locked': { 'read': 0, 'write': 0 }, 'acquiring': { 'read': 0, 'write': 0 } }
 
     for key in data:
-      totals['locked']['read'] += int(data[key]['timeLockedMicros']['r'].get('$numberLong', 0))
-      totals['locked']['write'] += int(data[key]['timeLockedMicros']['w'].get('$numberLong', 0))
-      totals['acquiring']['read'] += int(data[key]['timeAcquiringMicros']['r'].get('$numberLong', 0))
-      totals['acquiring']['write'] += int(data[key]['timeAcquiringMicros']['w'].get('$numberLong', 0))
+      if key != '.':
+        totals['locked']['read'] += int(data[key]['timeLockedMicros']['r'])
+        totals['locked']['write'] += int(data[key]['timeLockedMicros']['w'])
+        totals['acquiring']['read'] += int(data[key]['timeAcquiringMicros']['r'])
+        totals['acquiring']['write'] += int(data[key]['timeAcquiringMicros']['w'])
 
     print names[0] + ".value " + str( totals['locked']['read'] )
     print names[1] + ".value " + str( totals['locked']['write'] )
